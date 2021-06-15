@@ -12,6 +12,7 @@ class todolist extends StatefulWidget {
 
 class _todolistState extends State<todolist> {
   List<dynamic> userTodo = [];
+  bool checkin;
 
   @override
   void initState() {
@@ -22,13 +23,13 @@ class _todolistState extends State<todolist> {
   Future<String> get_todo() async {
     List<dynamic> listTodo = [];
     var iduser = widget.id.toString();
-    final String urlAPI = "https://jsonplaceholder.typicode.com/todo/";
+    final String urlAPI = "https://jsonplaceholder.typicode.com/todos/";
     var apiresult = await http.get(Uri.parse(urlAPI));
 
     setState(() {
       var jsonObject = json.decode(apiresult.body);
       listTodo = jsonObject;
-      // print(post);
+      print(jsonObject);
       for (var i = 0; i < listTodo.length; i++) {
         if (listTodo[i]['userId'].toString() == iduser) {
           print('gotthemmm');
@@ -54,6 +55,8 @@ class _todolistState extends State<todolist> {
         child: Center(
           child: Column(
             children: <Widget>[
+              SizedBox(height: 20),
+              Text('To Do List', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
               SizedBox(height: 40),
               Expanded(
                 child: SizedBox(
@@ -62,11 +65,15 @@ class _todolistState extends State<todolist> {
                     padding: const EdgeInsets.all(8),
                     itemCount: (userTodo != null ? userTodo.length : 0),
                     itemBuilder: (BuildContext context, int index) {
+                      var check = userTodo[index]['completed'];
+                      print(check);
                       return CheckboxListTile(
                         title: Text(userTodo[index]['title'].toString()),
-                        value: userTodo[index]['completed'], 
+                        value: check, 
                         onChanged: (bool val){
-                          
+                          setState(() {
+                            check = val;
+                          });                          
                         }
                       );
                     }

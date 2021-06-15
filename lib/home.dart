@@ -69,20 +69,22 @@ class _myhomeState extends State<myhome> {
           child: Column(
             children: <Widget> [
               SizedBox(height: 30),
-              Text((datauser != null) ? "Hello, ${datauser['name']}" : "",),
+              Text((datauser != null) ? "Hello, ${datauser['name']}" : "", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
               SizedBox(height: 30),
               ElevatedButton(
                 child: Text('My Posts'),
                 onPressed: (){
                   Navigator.pushNamed(context, '/post', arguments: widget.id);                  
                 },
+                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.green))
               ),
               SizedBox(height: 40),
               ElevatedButton(
-                child: Text('My To Do List'),
+                child: Text('My To-Do List'),
                 onPressed: (){
                   Navigator.pushNamed(context, '/todo', arguments: widget.id);
-                }
+                },
+                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.green))
               )
             ],
           ),

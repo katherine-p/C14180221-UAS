@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:google_fonts/google_fonts.dart';
 import 'home.dart';
 import 'post.dart';
+import 'todo.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,11 +21,12 @@ class MyApp extends StatelessWidget {
         '/': (context) => Home(),
         '/home': (context) => myhome(ModalRoute.of(context).settings.arguments as int),
         '/post': (context) => mypost(ModalRoute.of(context).settings.arguments as int),
-        '/todo': (context) => myhome(ModalRoute.of(context).settings.arguments as int)
+        '/todo': (context) => todolist(ModalRoute.of(context).settings.arguments as int)
       },
       theme: ThemeData(
-        textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme,
-    ),)
+        textTheme: GoogleFonts.robotoMonoTextTheme((Theme.of(context).textTheme)
+      ),
+    )
     );
   }
 }
@@ -76,6 +78,8 @@ class _HomeState extends State<Home> {
       if(cek == 0)
       {
         print('cant find user');
+        final snackBar = SnackBar(content: Text('Wrong username or password.'));
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
 
     });
@@ -87,7 +91,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: Colors.green[200],
       appBar: AppBar(
-        title: new Center(child: Text('Post', style: TextStyle(color: Colors.black))),
+        title: new Center(child: Text('Its Me', style: TextStyle(color: Colors.black))),
         backgroundColor: Colors.green[50],
       ),
       body: Container(
@@ -112,7 +116,8 @@ class _HomeState extends State<Home> {
                 children: <Widget>[
                   ElevatedButton(
                     onPressed: ceklogin, 
-                    child: Text("Login"),
+                    child: Text("Login", style: TextStyle(fontSize: 20), textAlign: TextAlign.center),
+                    style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.green),),
                   ),
                 ],
               ),
